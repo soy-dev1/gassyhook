@@ -129,6 +129,9 @@ void __stdcall hooks::PaintTraverse(uintptr_t vguiPanel, bool forceRepaint, bool
 				if (!player)
 					continue;
 
+				if (player == globals::localPlayer)
+					continue;
+
 				if (player->IsDormant() || !player->IsAlive())
 					continue;
 
@@ -151,7 +154,7 @@ void __stdcall hooks::PaintTraverse(uintptr_t vguiPanel, bool forceRepaint, bool
 				if (interfaces::debugOverlay->ScreenPosition(player->GetAbsOrigin() - CVector{ 0.f, 0.f, 9.f }, bottom))
 					continue;
 
-				hacks::hitboxPoints(globals::aimbotPoints, player, bones, HITBOX_HEAD, 0.85f);
+				hacks::hitboxPoints(globals::aimbotPoints, player, bones, HITBOX_HEAD, globals::pointScale);
 
 
 				const float h = bottom.y - top.y;

@@ -23,6 +23,7 @@ namespace globals
 	extern bool autoshoot;
 	extern float smoothing;
 	extern bool autostop;
+	extern float pointScale;
 	extern std::vector<CVector> aimbotPoints;
 
 	// update the local player pointer

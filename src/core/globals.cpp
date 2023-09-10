@@ -21,6 +21,7 @@ int globals::monitorsizey = 1080;
 bool globals::autoshoot = false;
 float globals::smoothing = 0.1f;
 bool globals::autostop = true;
+float globals::pointScale = 0.75f;
 std::vector<CVector> globals::aimbotPoints{};
 
 void globals::UpdateLocalPlayer() noexcept

@@ -135,7 +135,7 @@ void hacks::RunAimbot(CUserCmd* cmd) noexcept
 		if (!player->SetupBones(bones, 128, 256, interfaces::globals->currentTime))
 			continue;
 
-		hacks::hitboxPoints(globals::aimbotPoints, player, bones, HITBOX_HEAD, 0.85f);
+		hacks::hitboxPoints(globals::aimbotPoints, player, bones, HITBOX_HEAD, globals::pointScale);
 
 		// eye pos
 		CVector localEyePos;

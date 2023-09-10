@@ -130,6 +130,8 @@ void hacks::hitboxPoints(std::vector<CVector>& points, CEntity* player, CMatrix3
 
 		const float rotation = 0.70710678f;
 
+		points.push_back(center);
+
 		// top/back 45 deg. Best place to shoot at
 		points.push_back({ hitbox->bbMax.x + (rotation * radius), hitbox->bbMax.y + (-rotation * radius), hitbox->bbMax.z });
 
@@ -139,8 +141,6 @@ void hacks::hitboxPoints(std::vector<CVector>& points, CEntity* player, CMatrix3
 		points.push_back({ hitbox->bbMax.x, hitbox->bbMax.y, hitbox->bbMax.z - radius });
 		// back
 		points.push_back({ hitbox->bbMax.x, hitbox->bbMax.y - radius, hitbox->bbMax.z });
-
-		points.push_back(center);
 
 
 	}

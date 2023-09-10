@@ -195,6 +195,7 @@ void gui::Render() noexcept {
 				ImGui::SliderFloat("fraction (pseudo wallbang checker, turn down to shoot through walls)", &globals::frac, 0.f, 1.f);
 				ImGui::SliderFloat("smoothing", &globals::smoothing, 0, 1);
 				ImGui::SliderFloat("Minimum Accuracy", &globals::minaccuracy, 0.f, 500.f);
+				ImGui::SliderFloat("Aimpoint Tolerance", &globals::pointScale, 0.f, 0.85f);
 
 				ImGui::EndTabItem(); // End "Aimbot" tab
 			}
