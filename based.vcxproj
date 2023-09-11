@@ -179,6 +179,7 @@
     <ClInclude Include="ext\imgui\imstb_rectpack.h" />
     <ClInclude Include="ext\imgui\imstb_textedit.h" />
     <ClInclude Include="ext\imgui\imstb_truetype.h" />
+    <ClInclude Include="ext\x86RetSpoof.h" />
     <ClInclude Include="src\gui\gui.h" />
     <ClInclude Include="src\hacks\aimbot.h" />
     <ClInclude Include="ext\minhook\buffer.h" />
