@@ -21,10 +21,12 @@ bool visible(CVector eyepos, CVector endpos) noexcept {
 	return false;
 }
 
+int calculateDmg() {
+
+}
 
 void hacks::RunAimbot(CUserCmd* cmd) noexcept
 {
-
 	if (globals::RCS) {
 
 		CEntity* activeWeapon = globals::localPlayer->GetActiveWeapon();
@@ -91,8 +93,11 @@ void hacks::RunAimbot(CUserCmd* cmd) noexcept
 			return;
 
 		if (weaponType == CEntity::WEAPONTYPE_SNIPER) {
-			if (!globals::localPlayer->IsScoped())
-				return;
+			if (!globals::shootUnscoped) {
+				if (!globals::localPlayer->IsScoped()) {
+					return;
+				}
+			}
 		}
 
 		float inaccuracy = 1.f / activeWeapon->GetInaccuracy();
@@ -135,7 +140,9 @@ void hacks::RunAimbot(CUserCmd* cmd) noexcept
 		if (!player->SetupBones(bones, 128, 256, interfaces::globals->currentTime))
 			continue;
 
-		hacks::hitboxPoints(globals::aimbotPoints, player, bones, HITBOX_HEAD, globals::pointScale);
+		for (int hb = HITBOX_HEAD; hb != HITBOX_MAX; hb++) {
+			hacks::hitboxPoints(globals::aimbotPoints, player, bones, hb, globals::pointScale);
+		}
 
 		// eye pos
 		CVector localEyePos;
@@ -179,6 +186,7 @@ void hacks::RunAimbot(CUserCmd* cmd) noexcept
 	}
 
 	if ((bestAngle.x != 0) || (bestAngle.y != 0)) {
+
 		if (globals::silent) {
 			cmd->buttons |= CUserCmd::IN_ATTACK;
 			cmd->viewAngles = cmd->viewAngles + bestAngle;
@@ -186,7 +194,6 @@ void hacks::RunAimbot(CUserCmd* cmd) noexcept
 		else {
 			cmd->viewAngles = cmd->viewAngles + bestAngle.Scale(globals::smoothing);
 		}
-		//cmd->buttons &= ~CUserCmd::IN_ATTACK;
 	}
 
 	globals::aimbotPoints.clear();

@@ -186,16 +186,40 @@ void gui::Render() noexcept {
 			if (ImGui::BeginTabItem("Aimbot")) {
 
 				ImGui::Checkbox("Enable Aimbot", &globals::aimbot);
+				ImGui::Checkbox("Shoot Unscoped", &globals::shootUnscoped);
 				ImGui::Checkbox("Enable Autoshoot", &globals::autoshoot);
 				ImGui::Checkbox("Silent", &globals::silent);
 				ImGui::Checkbox("RCS (enable if aimbot is disabled)", &globals::RCS);
 				ImGui::Checkbox("autostop", &globals::autostop);
 				ImGui::Checkbox("Accuracy Toggle (silent only)", &globals::minacctoggle);
+				ImGui::Checkbox("Head Only", &globals::headOnly);
+
 				ImGui::SliderFloat("Aimbot Fov", &globals::aimbotFOV, 0.f, 360.f);
 				ImGui::SliderFloat("fraction (pseudo wallbang checker, turn down to shoot through walls)", &globals::frac, 0.f, 1.f);
 				ImGui::SliderFloat("smoothing", &globals::smoothing, 0, 1);
 				ImGui::SliderFloat("Minimum Accuracy", &globals::minaccuracy, 0.f, 500.f);
 				ImGui::SliderFloat("Aimpoint Tolerance", &globals::pointScale, 0.f, 0.85f);
+
+				if (ImGui::BeginChild(1)) {
+
+					ImGui::Columns(2);
+
+					ImGui::Text("Hitbox Toggle");
+					ImGui::Checkbox("Head", &globals::hbToggle.head);
+					ImGui::Checkbox("Body", &globals::hbToggle.body); 
+					ImGui::Checkbox("Legs", &globals::hbToggle.legs);
+					ImGui::Checkbox("Arms", &globals::hbToggle.arms);
+
+					ImGui::NextColumn();
+
+					ImGui::Text("Multipoint Toggle");
+					ImGui::Checkbox("MP Head", &globals::hbMpToggle.head); // i am adding the MP identifier in the names here because imgui assigns the checkboxes the same ID if I don't. might fix later lol.
+					ImGui::Checkbox("MP Body", &globals::hbMpToggle.body);
+					ImGui::Checkbox("MP Legs", &globals::hbMpToggle.legs);
+					ImGui::Checkbox("MP Arms", &globals::hbMpToggle.arms);
+
+					ImGui::EndChild();
+				}
 
 				ImGui::EndTabItem(); // End "Aimbot" tab
 			}

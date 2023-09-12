@@ -17,6 +17,11 @@ public:
 		return { x + other.x, y + other.y, z + other.z };
 	}
 
+	constexpr CVector operator+=(const CVector& other) const noexcept
+	{
+		return { x + other.x, y + other.y, z + other.z };
+	}
+
 	constexpr CVector operator-(const CVector& other) const noexcept
 	{
 		return { x - other.x, y - other.y, z - other.z };
@@ -30,6 +35,24 @@ public:
 	constexpr CVector operator/(const CVector& other) const noexcept
 	{
 		return { x / other.x, y / other.y, z / other.z };
+	}
+
+	// Access by index
+	float& operator[](unsigned index) {
+		if (index == 0) return x;
+		if (index == 1) return y;
+		if (index == 2) return z;
+
+		// Throw exception or other error handling
+	}
+
+	// Const access  
+	const float& operator[](unsigned index) const {
+		if (index == 0) return x;
+		if (index == 1) return y;
+		if (index == 2) return z;
+
+		// Throw exception or other error handling
 	}
 
 	constexpr CVector Scale(float factor) const noexcept

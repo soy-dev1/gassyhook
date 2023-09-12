@@ -22,6 +22,10 @@ bool globals::autoshoot = false;
 float globals::smoothing = 0.1f;
 bool globals::autostop = true;
 float globals::pointScale = 0.75f;
+bool globals::shootUnscoped = false;
+bool globals::headOnly = true;
+globals::hbSelstruct globals::hbMpToggle;
+globals::hbSelstruct globals::hbToggle;
 std::vector<CVector> globals::aimbotPoints{};
 
 void globals::UpdateLocalPlayer() noexcept

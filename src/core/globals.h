@@ -5,6 +5,13 @@ class CVector;
 class CEntity;
 namespace globals
 {
+	struct hbSelstruct {
+		bool head;
+		bool body;
+		bool arms;
+		bool legs;
+	};
+
 	inline CEntity* localPlayer = nullptr;
 	extern bool aimbot;
 	extern bool silent;
@@ -24,6 +31,10 @@ namespace globals
 	extern float smoothing;
 	extern bool autostop;
 	extern float pointScale;
+	extern bool shootUnscoped;
+	extern bool headOnly;
+	extern hbSelstruct hbMpToggle;
+	extern hbSelstruct hbToggle;
 	extern std::vector<CVector> aimbotPoints;
 
 	// update the local player pointer

@@ -113,6 +113,7 @@ bool __stdcall hooks::CreateMove(float frameTime, CUserCmd* cmd) noexcept
 		if (globals::autostop)
 			hacks::AutoStop(cmd);
 
+
 		hacks::RunAimbot(cmd);
 	}
 
@@ -158,8 +159,9 @@ void __stdcall hooks::PaintTraverse(uintptr_t vguiPanel, bool forceRepaint, bool
 				if (interfaces::debugOverlay->ScreenPosition(player->GetAbsOrigin() - CVector{ 0.f, 0.f, 9.f }, bottom))
 					continue;
 
-				hacks::hitboxPoints(globals::aimbotPoints, player, bones, HITBOX_HEAD, globals::pointScale);
-
+				for (int hb = HITBOX_HEAD; hb != HITBOX_MAX; hb++) {
+					hacks::hitboxPoints(globals::aimbotPoints, player, bones, hb, globals::pointScale);
+				}
 
 				const float h = bottom.y - top.y;
 
@@ -224,7 +226,7 @@ void __stdcall hooks::PaintTraverse(uintptr_t vguiPanel, bool forceRepaint, bool
 			static CVector h;
 
 			interfaces::debugOverlay->ScreenPosition(pos, h);
-			interfaces::surface->DrawFilledRect(h.x, h.y, h.x + 2, h.y + 2);
+			interfaces::surface->DrawOutlinedCircle(h.x, h.y, 2, 20);
 		}
 
 	}
