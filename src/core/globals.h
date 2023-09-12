@@ -1,16 +1,22 @@
 #pragma once
 #include <vector>
-
-class CVector;
+#include "../valve/cvector.h"
 class CEntity;
+
 namespace globals
 {
+	struct aimpoint {
+		CVector pos;
+		int hbtype;
+	};
+
 	struct hbSelstruct {
 		bool head;
 		bool body;
 		bool arms;
 		bool legs;
 	};
+
 
 	inline CEntity* localPlayer = nullptr;
 	extern bool aimbot;
@@ -35,7 +41,7 @@ namespace globals
 	extern bool headOnly;
 	extern hbSelstruct hbMpToggle;
 	extern hbSelstruct hbToggle;
-	extern std::vector<CVector> aimbotPoints;
+	extern std::vector<aimpoint> aimbotPoints;
 
 	// update the local player pointer
 	void UpdateLocalPlayer() noexcept;

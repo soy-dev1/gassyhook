@@ -222,10 +222,10 @@ void __stdcall hooks::PaintTraverse(uintptr_t vguiPanel, bool forceRepaint, bool
 
 		interfaces::surface->DrawSetColor(255, 255, 255, 255);
 
-		for (CVector pos : globals::aimbotPoints) {
+		for (globals::aimpoint pos : globals::aimbotPoints) {
 			static CVector h;
 
-			interfaces::debugOverlay->ScreenPosition(pos, h);
+			interfaces::debugOverlay->ScreenPosition(pos.pos, h);
 			interfaces::surface->DrawOutlinedCircle(h.x, h.y, 2, 20);
 		}
 
