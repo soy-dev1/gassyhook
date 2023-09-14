@@ -26,7 +26,7 @@ bool globals::shootUnscoped = false;
 bool globals::headOnly = true;
 globals::hbSelstruct globals::hbMpToggle;
 globals::hbSelstruct globals::hbToggle;
-std::vector<CVector> globals::aimbotPoints{};
+std::vector<globals::aimpoint> globals::aimbotPoints{};
 
 void globals::UpdateLocalPlayer() noexcept
 {

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <Windows.h>
 
-bool visible(CVector eyepos, CVector endpos) noexcept {
+bool visible(CVector eyepos, CVector endpos, int hbtype) noexcept {
 
 	CTrace trace;
 	interfaces::engineTrace->TraceRay(
@@ -15,15 +15,17 @@ bool visible(CVector eyepos, CVector endpos) noexcept {
 		trace
 	);
 
+	for (int hb = HITBOX_HEAD; hb != HITBOX_MAX; hb++) {
+		if (globals::headOnly && hbtype != HITBOX_HEAD)
+			return false;
+	}
+
 	if (trace.fraction > globals::frac)
 		return true;
 
 	return false;
 }
 
-int calculateDmg() {
-
-}
 
 void hacks::RunAimbot(CUserCmd* cmd) noexcept
 {
@@ -166,10 +168,10 @@ void hacks::RunAimbot(CUserCmd* cmd) noexcept
 		for (const auto& point : globals::aimbotPoints) {
 		
 		  // Check if point is visible
-		  if (visible(localEyePos, point)) {
+		  if (visible(localEyePos, point.pos, point.hbtype)) {
 		
 		    // Calculate angle to enemy
-		    CVector angleToEnemy = (point - localEyePos).ToAngle() - (cmd->viewAngles + aimPunch);
+		    CVector angleToEnemy = (point.pos - localEyePos).ToAngle() - (cmd->viewAngles + aimPunch);
 
 		    // Calculate FOV
 		    float fov = std::hypot(angleToEnemy.x, angleToEnemy.y);

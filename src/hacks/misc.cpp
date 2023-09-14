@@ -4,9 +4,6 @@
 
 #include <math.h>
 
-// access global variables
-#include "../core/globals.h"
-
 // access interfaces
 #include "../valve/centity.h"
 
@@ -115,7 +112,7 @@ void VectorTransform(const CVector& in,
     };
 }
 
-void hacks::hitboxPoints(std::vector < CVector >& points, CEntity* player, CMatrix3x4* bones, int iHitbox, float flPointScale) noexcept {
+void hacks::hitboxPoints(std::vector < globals::aimpoint >& points, CEntity* player, CMatrix3x4* bones, int iHitbox, float flPointScale) noexcept {
 
     const CModel* model = player->GetModel();
     if (!model)
@@ -144,54 +141,54 @@ void hacks::hitboxPoints(std::vector < CVector >& points, CEntity* player, CMatr
     if (iHitbox == HITBOX_HEAD) {
 
         if (globals::hbToggle.head)
-            points.push_back(center);
+            points.push_back({ center, HITBOX_HEAD });
 
         if (globals::hbMpToggle.head) {
             // top/back 45 deg. Best place to shoot at
-            points.push_back({
+            points.push_back({ {
                 hitbox->bbMax.x + (rotation * radius),
                 hitbox->bbMax.y + (-rotation * radius),
                 hitbox->bbMax.z
-                });
+                }, HITBOX_HEAD });
             // right
-            points.push_back({
+            points.push_back({ {
                 hitbox->bbMax.x,
                 hitbox->bbMax.y,
                 hitbox->bbMax.z + radius
-                });
+                }, HITBOX_HEAD });
             // left
-            points.push_back({
+            points.push_back({ {
                 hitbox->bbMax.x,
                 hitbox->bbMax.y,
                 hitbox->bbMax.z - radius
-                });
+                }, HITBOX_HEAD });
             // back
-            points.push_back({
+            points.push_back({ {
                 hitbox->bbMax.x,
                 hitbox->bbMax.y - radius,
                 hitbox->bbMax.z
-                });
+                }, HITBOX_HEAD });
         }
     }
     else if (iHitbox == HITBOX_STOMACH) {
         // center.
         if (globals::hbToggle.body)
-            points.push_back(center);
+            points.push_back({ center, HITBOX_STOMACH });
 
         // back.
         if (globals::hbMpToggle.body) {
 
-            points.push_back({
+            points.push_back({ {
                 center.x,
                 hitbox->bbMax.y - radius,
                 center.z
-                });
+                }, HITBOX_STOMACH });
 
-            points.push_back({
+            points.push_back({ {
                 center.x - hitbox->bbMax.x,
                 center.y,
                 center.z
-                });
+                }, HITBOX_STOMACH });
         }
 
 
@@ -199,62 +196,62 @@ void hacks::hitboxPoints(std::vector < CVector >& points, CEntity* player, CMatr
     else if (iHitbox == HITBOX_PELVIS || iHitbox == HITBOX_UPPER_CHEST) {
         // back.
         if (globals::hbToggle.body)
-            points.push_back({
+            points.push_back({ {
                 center.x,
                 hitbox->bbMax.y - radius,
                 center.z
-                });
+                }, HITBOX_UPPER_CHEST });
     }
 
     else if (iHitbox == HITBOX_THORAX || iHitbox == HITBOX_CHEST) {
         // add center.
         if (globals::hbToggle.body)
-            points.push_back(center);
+            points.push_back({ center, HITBOX_CHEST });
 
         // add multipoints
         if (globals::hbMpToggle.body) {
 
             // point on the back
-            points.push_back({
+            points.push_back({ {
                 center.x,
                 hitbox->bbMax.y - radius,
                 center.z
-                });
+                }, HITBOX_CHEST });
 
             // right
-            points.push_back({center.x, center.y, hitbox->bbMax.z + radius});
+            points.push_back({ {center.x, center.y, hitbox->bbMax.z + radius}, HITBOX_CHEST });
             // left 
-            points.push_back({center.x, center.y, hitbox->bbMin.z - radius});
+            points.push_back({ {center.x, center.y, hitbox->bbMin.z - radius}, HITBOX_CHEST });
         }
     }
     else if (iHitbox == HITBOX_RIGHT_CALF || iHitbox == HITBOX_LEFT_CALF) {
         // add center.
         if (globals::hbToggle.legs)
-            points.push_back(center);
+            points.push_back({ center, HITBOX_LEFT_CALF });
 
         // half bottom.
         if (globals::hbMpToggle.legs)
-            points.push_back({
+            points.push_back({ {
                 hitbox->bbMax.x - (hitbox->capsuleRadius / 2.f),
                 hitbox->bbMax.y,
                 hitbox->bbMax.z
-                });
+                }, HITBOX_LEFT_CALF });
     }
     else if (iHitbox == HITBOX_RIGHT_THIGH || iHitbox == HITBOX_LEFT_THIGH) {
         // add center.
         if (globals::hbToggle.legs)
-            points.push_back(center);
+            points.push_back({ center, HITBOX_RIGHT_THIGH });
     }
 
     // arms get only one point.
     else if (iHitbox == HITBOX_RIGHT_UPPER_ARM || iHitbox == HITBOX_LEFT_UPPER_ARM) {
         // elbow.
         if (globals::hbMpToggle.arms)
-            points.push_back({
+            points.push_back({ {
                 hitbox->bbMax.x + hitbox->capsuleRadius,
                 center.y,
                 center.z
-                });
+                }, HITBOX_LEFT_UPPER_ARM });
     }
 
     if (points.empty())
@@ -263,9 +260,9 @@ void hacks::hitboxPoints(std::vector < CVector >& points, CEntity* player, CMatr
     size_t i;
     for (i = originalSize; i < points.size(); i++) {
 
-        CVector p = points[i];
+        globals::aimpoint p = points[i];
 
-        VectorTransform(p, bones[hitbox->bone], p);
+        VectorTransform(p.pos, bones[hitbox->bone], p.pos);
 
         points[i] = p;
     }
